@@ -39,18 +39,19 @@ int CServer::ParseRequest(int clientSock, const sockaddr_in& clientAddr, char *r
 	vector<string> buf;
 	split(string(req), string("\n"), buf);
 
-	// ¼ì²éÇëÇóÊÇ·ñÎª¿Õ
+	// æ£€æŸ¥è¯·æ±‚æ˜¯å¦ä¸ºç©º
 	if (buf[0]=="\n" || buf[0]=="\r\n")
 	{
 		PrintError(clientAddr, string("Can't parse request."));
 		return -1;
 	}
 
-	// ¼ì²éGETÇëÇó
+	// æ£€æŸ¥GETè¯·æ±‚
 	vector<string> method_buf;
 	split(buf[0], string(" "), method_buf);
 	if (toLowerString(method_buf[0])!="get")
 	{
+		// check out HTTP 405 error code
 		PrintError(clientAddr, string("That method is not implemented."));
 	}
 	vector<string> query_buf;
